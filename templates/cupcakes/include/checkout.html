@@ -1,0 +1,113 @@
+<div class="col-lg-6 col-12 col-custom">
+    <div class="seu-pedido">
+        <h3>Seu pedido #{{order.id}}</h3>
+        <div class="tabela-do-seu-pedido table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="nome-do-produto">Produto</th>
+                        <th class="total-do-produto">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto in order.produtos %}
+                    <tr class="item-do-carrinho">
+                        <td class="nome-do-produto">{{produto.titulo}}<strong class="quantidade-do-produto"> ×
+                                {{produto.quantidade}}</strong></td>
+                        <td class="total-do-produto text-center"><span class="quantia">${{produto.total_preco}}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="item-do-carrinho">
+                        <td class="nome-do-produto" style="font-weight: bold; color: #ff5722;">
+                            🎉 Aproveite agora! <span style="text-decoration: underline;">Desconto Exclusivo</span>
+                        </td>
+                        <td class="total-do-produto text-center" style="font-weight: bold; font-size: 1.2em; color: #4CAF50;">
+                            <span class="quantia">- ${{order.discount}}</span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="item-do-carrinho">
+                        <td class="nome-do-produto" style="font-weight: bold; color: #03A9F4;">
+                            🚚 Frete:
+                        </td>
+                        <td class="total-do-produto text-center" style="font-weight: bold; font-size: 1.2em; color: #FF9800;">
+                            <span class="quantia"> ${{ order.shipping}} </span>
+                        </td>
+                    </tr>                    
+                </tbody>
+                <tfoot>
+                    <tr class="subtotal-do-carrinho">
+                        <th>Subtotal do Carrinho</th>
+                        <td class="text-center"><span class="quantia">${{order.total}}</span></td>
+                    </tr>
+                    <tr class="total-do-pedido">
+                        <th>Total do Pedido</th>
+                        <td class="text-center"><strong><span class="quantia">${{order.total}}</span></strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="metodo-de-pagamento">
+            <div class="acordeao-de-pagamento">
+                <div id="acordeao">
+                    <div class="card">
+                        <div class="card-header" id="#pagamento-1">
+                            <h5 class="titulo-do-painel mb-3">
+                                <a href="#" class="" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                    Transferência Bancária Direta.
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" data-parent="#acordeao">
+                            <div class="card-body mb-2 mt-2">
+                                <p>Faça o pagamento diretamente em nossa conta bancária. Por favor, use o ID do seu
+                                    pedido como referência de pagamento. Seu pedido não será enviado até que os fundos
+                                    tenham sido compensados em nossa conta.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="#pagamento-2">
+                            <h5 class="titulo-do-painel mb-3">
+                                <a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    Pagamento com Cheque
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" data-parent="#acordeao">
+                            <div class="card-body mb-2 mt-2">
+                                <p>Faça o pagamento diretamente em nossa conta bancária. Por favor, use o ID do seu
+                                    pedido como referência de pagamento. Seu pedido não será enviado até que os fundos
+                                    tenham sido compensados em nossa conta.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="#pagamento-3">
+                            <h5 class="titulo-do-painel mb-3">
+                                <a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                    aria-expanded="false" aria-controls="collapseThree">
+                                    PayPal
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" data-parent="#acordeao">
+                            <div class="card-body mb-2 mt-2">
+                                <p>Faça o pagamento diretamente em nossa conta bancária. Por favor, use o ID do seu
+                                    pedido como referência de pagamento. Seu pedido não será enviado até que os fundos
+                                    tenham sido compensados em nossa conta.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="botao-confirmar-pedido">
+                    <button class="btn flosun-button secondary-btn black-color rounded-0 w-100">Confirmar
+                        pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

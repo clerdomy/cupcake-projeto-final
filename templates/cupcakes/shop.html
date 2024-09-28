@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<body>
+    <!-- Área de Cabeçalho Início -->
+    {% include "cupcakes/include/html-header.html" %}
+
+    <!-- Área de Cabeçalho Fim -->
+    <!-- Área de Breadcrumb Início -->
+    <div class="breadcrumbs-area position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="breadcrumb-content position-relative section-content">
+                        <h3 class="title-3">Barra Lateral da Loja</h3>
+                        <ul>
+                            <li><a href="{% url 'home-page' %}">Início</a></li>
+                            <li>Loja</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Área de Breadcrumb Fim -->
+    <!-- Área Principal da Loja Início -->
+    <div class="shop-main-area">
+        <div class="container container-default custom-area">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9 col-12 col-custom widget-mt">
+                    <!-- Início da barra de ferramentas da loja -->
+                    <div class="shop_toolbar_wrapper mb-30">
+                        <div class="shop_toolbar_btn">
+                            <button data-role="grid_3" type="button" class="active btn-grid-3" title="Grade"><i class="fa fa-th"></i></button>
+                            <!-- <button data-role="grid_list" type="button" class="btn-list" title="Lista"><i class="fa fa-th-list"></i></button> -->
+                        </div>
+                        <div class="shop-select">
+                            <form class="d-flex flex-column w-100" action="{% url 'shop-page' %}" method="get">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <select class="form-control nice-select w-100" name="sort_by" onchange="this.form.submit()">
+                                        <option selected value="1">Alfabeticamente, A-Z</option>
+                                        <option value="2">Ordenar por popularidade</option>
+                                        <option value="3">Ordenar por novidades</option>
+                                        <option value="4">Ordenar por preço: baixo para alto</option>
+                                        <option value="5">Ordenar por preço: alto para baixo</option>
+                                        <option value="6">Nome do Produto: Z</option>
+                                    </select>
+                                </div>
+                            </form>                            
+                        </div>
+                    </div>
+                    <!-- Fim da barra de ferramentas da loja -->
+                    <!-- Início da área de produtos da loja -->
+                    {% include "cupcakes/include/produtos.html" %}
+                    <!-- Fim da área de produtos da loja -->
+                    <!-- Início da barra de ferramentas inferior -->
+                    <div class="row">
+                        <div class="col-sm-12 col-custom">
+                            <div class="toolbar-bottom">
+                                <div class="pagination">
+                                    <ul>
+                                        {% if page_obj.has_previous %}
+                                            <li><a href="?page=1">&lt;&lt;</a></li>
+                                            <li><a href="?page={{ page_obj.previous_page_number }}">anterior</a></li>
+                                        {% else %}
+                                            <li class="disabled">&lt;&lt;</li>
+                                            <li class="disabled">anterior</li>
+                                        {% endif %}
+                    
+                                        {% for num in page_obj.paginator.page_range %}
+                                            {% if page_obj.number == num %}
+                                                <li class="current">{{ num }}</li>
+                                            {% else %}
+                                                <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                    
+                                        {% if page_obj.has_next %}
+                                            <li class="next"><a href="?page={{ page_obj.next_page_number }}">próximo</a></li>
+                                            <li><a href="?page={{ page_obj.paginator.num_pages }}">&gt;&gt;</a></li>
+                                        {% else %}
+                                            <li class="disabled">próximo</li>
+                                            <li class="disabled">&gt;&gt;</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <p class="desc-content text-center text-sm-right mb-0">
+                                    Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de {{ page_obj.paginator.count }} resultados
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Fim da barra de ferramentas inferior -->
+                </div>
+
+                <!-- Início do Widget da Barra Lateral -->
+                <div class="col-lg-3 col-12 col-custom">
+                    <!-- Início do Widget da Barra Lateral -->
+                    <aside class="sidebar_widget widget-mt">
+                        <div class="widget_inner">
+                            <div class="widget-list widget-mb-1">
+                                <h3 class="widget-title">Pesquisar</h3>
+                                <div class="search-box">
+                                    <form action="{% url 'shop-page' %}" method="">
+                                        <div class="input-group">
+                                            <input type="text" name="search_query" class="form-control" placeholder="Pesquisar em Nossa Loja" aria-label="Pesquisar em Nossa Loja">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="submit">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="widget-list widget-mb-1">
+                                <h3 class="widget-title">Categorias do Menu</h3>
+                                <!-- Início do Menu de Widget -->
+                                <nav>
+                                    <ul class="mobile-menu p-0 m-0">
+                                        {% for categoria in categorias %}
+                                            <li class="menu-item-has-children">
+                                                <a href="{% url 'shop-page' %}?categoria={{categoria.id}}">{{ categoria.nome_categoria }}</a>
+                                                <input type="hidden" name="categoria_id" value="{{categoria.id}}">
+                                                <ul class="dropdown">
+                                                    {% for cupcake in categoria.categoria_cupcakes.all %}
+                                                    <li><a href="?categoria={{categoria.id}}&cupcake={{cupcake.titulo}}"> {{ cupcake.titulo }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </nav>
+                                <!-- Fim do Menu de Widget -->
+                            </div>
+                        </div>
+                    </aside>
+                    <!-- Fim do Widget da Barra Lateral -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Área Principal da Loja Fim -->
+    <!-- Início da Área de Rodapé -->
+    {% include "cupcakes/include/html-footer.html" %}
+    <!-- Fim da Área de Rodapé -->
+
+    <!-- Modal -->
+
+    <!-- Início do Botão de Voltar ao Topo -->
+    <a class="scroll-to-top" href="#">
+        <i class="lnr lnr-arrow-up"></i>
+    </a>
+    <!-- Fim do Botão de Voltar ao Topo -->
+
+    <!-- JS ============================================ -->
+</body>
+
+{% endblock %}

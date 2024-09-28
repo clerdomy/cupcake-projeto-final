@@ -1,0 +1,58 @@
+{% load static %}
+
+<header class="main-header-area">
+    <div class="main-header header-transparent header-sticky">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-xl-2 col-md-6 col-6 col-custom">
+                    <div class="header-logo d-flex align-items-center">
+                        <a href="{% url 'home-page' %}">
+                            <img class="img-full" src="{% static 'assets/images/logo/logo.png' %}" alt="Logo do Cabeçalho">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8 d-none d-lg-flex justify-content-center col-custom">
+                    <nav class="main-nav d-none d-lg-flex">
+                        <ul class="nav">
+                            <li>
+                                <a class="active" href="{% url 'home-page' %}">
+                                    <span class="menu-text"> Início</span>
+                                    
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'shop-page' %}">
+                                    <span class="menu-text">Loja</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="{% url 'about_us-page' %}">
+                                    <span class="menu-text"> Sobre Nós</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'contact_us-page' %}">
+                                    <span class="menu-text">Fale Conosco</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'user_account-page' %}">
+                                    <span class="menu-text">Minha Conta</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'cart-page' %}">
+                                    <span class="menu-text">Carrinho</span>
+                                </a>
+                            </li>
+                        </ul>
+                        
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>

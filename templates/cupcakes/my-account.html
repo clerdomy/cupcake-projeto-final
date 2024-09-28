@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+<body>
+    <!-- Área de Cabeçalho Início Aqui -->
+    {% include "cupcakes/include/html-header.html" %}
+    <!-- Área de Cabeçalho Fim Aqui -->
+
+    <!-- Área de Breadcrumbs Início Aqui -->
+    <div class="breadcrumbs-area position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="breadcrumb-content position-relative section-content">
+                        <h3 class="title-3">Minha Conta</h3>
+                        <ul>
+                            <li><a href="{% url 'home-page' %}">Início</a></li>
+                            <li>Minha Conta</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Área de Breadcrumbs Fim Aqui -->
+
+    <!-- Wrapper da Minha Conta Início -->
+    <div class="my-account-wrapper mt-no-text">
+        <div class="container container-default-2 custom-area">
+            <div class="row">
+                <div class="col-lg-12 col-custom">
+                    <!-- Página da Minha Conta Início -->
+                    <div class="myaccount-page-wrapper">
+                        <!-- Menu de Abas da Minha Conta Início -->
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 col-custom">
+                                <div class="myaccount-tab-menu nav" role="tablist">
+                                    <a href="#dashboad" class="active" data-bs-toggle="tab"><i class="fa fa-dashboard"></i> Painel de Controle</a>
+                                    <a href="#orders" data-bs-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Pedidos</a>
+                                    <a href="#payment-method" data-bs-toggle="tab"><i class="fa fa-credit-card"></i> Método de Pagamento</a>
+                                    <a href="#address-edit" data-bs-toggle="tab"><i class="fa fa-map-marker"></i> Endereço</a>
+                                    <a href="#account-info" data-bs-toggle="tab"><i class="fa fa-user"></i> Detalhes da Conta</a>
+                                    <a href="{% url 'logout-page' %}"><i class="fa fa-sign-out"></i> Sair</a>
+                                </div>
+                            </div>
+                            <!-- Menu de Abas da Minha Conta Fim -->
+
+                            <!-- Conteúdo das Abas da Minha Conta Início -->
+                            <div class="col-lg-9 col-md-8 col-custom">
+                                <div class="tab-content" id="myaccountContent">
+                                    <!-- Conteúdo da Aba Painel de Controle Início -->
+                                    <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Painel de Controle</h3>
+                                            <div class="welcome">
+                                                <p>Olá, <strong>{{request.user.first_name}} {{request.user.last_name}}</strong> (Se não for <strong>{{request.user.username}} !</strong><a href="{% url 'logout-page' %}" class="logout"> Sair</a>)</p>
+                                            </div>
+                                            <p class="mb-0">
+                                                A partir do seu painel de controle, você pode verificar e visualizar facilmente seus pedidos recentes, gerenciar seus endereços de entrega e faturamento, e editar sua senha e detalhes da conta.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Conteúdo da Aba Painel de Controle Fim -->
+
+                                    <!-- Conteúdo da Aba Pedidos Início -->
+                                    <div class="tab-pane fade" id="orders" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Pedidos</h3>
+                                            <div class="myaccount-table table-responsive text-center">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Pedido</th>
+                                                            <th>Data</th>
+                                                            <th>Status</th>
+                                                            <th>Total</th>
+                                                            <th>Ação</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for order in orders %}
+                                                        <tr>
+                                                            <td>{{order.id}}</td>
+                                                            <td>{{order.data_pedido}}</td>
+                                                            <td>{{order.status}}</td>
+                                                            <td>R${{order.total}}</td>
+                                                            <td><a href="{%  url 'process_checkout' id=order.id %}" class="btn flosun-button secondary-btn theme-color rounded-0">Ver</a></td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Conteúdo da Aba Pedidos Fim -->
+
+                                    <!-- Conteúdo da Aba Método de Pagamento Início -->
+                                    <div class="tab-pane fade" id="payment-method" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Método de Pagamento</h3>
+                                            <p class="saved-message">Você ainda não salvou nenhum método de pagamento.</p>
+                                        </div>
+                                    </div>
+                                    <!-- Conteúdo da Aba Método de Pagamento Fim -->
+
+                                    <!-- Conteúdo da Aba Endereço Início -->
+                                    <div class="tab-pane fade" id="address-edit" role="tabpanel">
+                                        {% if address %}
+                                        <div class="myaccount-content">
+                                            <h3>Endereço de Cobrança</h3>
+                                            <address>
+                                                <p><strong>{{ address.first_name }} {{ address.last_name }}</strong></p>
+                                                <p>{{ address.street_address }}<br>{{ address.city }}/{{ address.state }}, {{address.postcode }}</p>
+                                                <p>Celular: {{ address.phone }}</p>
+                                            </address>
+                                            <!-- Botão para editar endereço -->
+                                            {% if user.is_authenticated %}
+                                            <a href="{% url 'edit_address' user.username|generate_user_token address.id %}" class="btn flosun-button secondary-btn theme-color rounded-0">
+                                                <i class="fa fa-edit mr-2"></i>Editar Endereço
+                                            </a>
+                                            {% endif %}
+                                            <!-- Botão para deletar endereço -->
+                                            <form action="{% url 'delete_address' address.id %}" method="POST" style="display:inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn flosun-button secondary-btn danger-color rounded-0">
+                                                    <i class="fa fa-trash mr-2"></i>Deletar Endereço
+                                                </button>
+                                            </form>
+                                        </div>
+                                        {% else %}
+                                        <form action="{% url 'registe_address' %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="checkbox-form">
+                                                <h3>Endereço de Cobrança</h3>
+                                                <div class="row">
+                                                    <!-- Formulário de endereço continua aqui -->
+                                                    ...
+                                                </div>
+                                                <div class="order-button-payment">
+                                                    <button class="btn flosun-button secondary-btn black-color rounded-0 w-100">Salvar Endereço</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                    <!-- Conteúdo da Aba Endereço Fim -->
+
+                                    <!-- Conteúdo da Aba Detalhes da Conta Início -->
+                                    <div class="tab-pane fade" id="account-info" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Account Details</h3>
+                                            <div class="account-details-form">
+                                                <form method="POST" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-custom">
+                                                            <div class="single-input-item mb-3">
+                                                                {{ user_form.first_name.label_tag }}
+                                                                {{ user_form.first_name }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-custom">
+                                                            <div class="single-input-item mb-3">
+                                                                {{ user_form.last_name.label_tag }}
+                                                                {{ user_form.last_name }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        {{ user_form.email.label_tag }}{{ user_form.email }}
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        {{ profile_form.avatar.label_tag }}{{ profile_form.avatar }}
+                                                    </div>
+                                                    <div class="single-input-item mb-3">
+                                                        {{ profile_form.bio.label_tag }}{{ profile_form.bio }}
+                                                    </div>
+                                                    <fieldset>
+                                                        <legend>Password change</legend>
+                                                        <div class="single-input-item mb-3">
+                                                            {{ password_form.old_password.label_tag }}
+                                                            {{ password_form.old_password }}
+                                                            
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-custom">
+                                                                <div class="single-input-item mb-3">
+                                                                    {{ password_form.new_password1.label_tag }}
+                                                                    {{ password_form.new_password1 }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-custom">
+                                                                <div class="single-input-item mb-3">
+                                                                    {{ password_form.new_password2.label_tag }}
+                                                                    {{ password_form.new_password2 }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <div class="single-input-item single-item-button">
+                                                        <button type="submit" class="btn flosun-button secondary-btn theme-color rounded-0">Salvar Alterações</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Conteúdo da Aba Detalhes da Conta Fim -->
+                                </div>
+                            </div>
+                            <!-- Conteúdo das Abas da Minha Conta Fim -->
+                        </div>
+                    </div>
+                    <!-- Página da Minha Conta Fim -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Wrapper da Minha Conta Fim -->
+
+    <!--Área de Rodapé Início-->
+    {% include "cupcakes/include/html-footer.html" %}
+    <!--Área de Rodapé Fim-->
+</body>
+{% endblock %}

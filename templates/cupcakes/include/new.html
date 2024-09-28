@@ -1,0 +1,48 @@
+<div class="swiper-wrapper">
+    {% for produtos in home_featured_products_grouped %}
+        <div class="single-item swiper-slide">
+            {% for produto in produtos %}
+                <div class="single-product position-relative mb-30">
+                    <div class="product-image">
+                        <a class="d-block" href="{% url 'product_details-page' produto.cupcake.id %}">
+                            <img src="{{ produto.imagens.0 }}" alt="" class="product-image-1 w-100">
+                            <!-- {% if produto.imagens.1 %}
+                                <img src="{{ produto.imagens.1 }}" alt="" class="product-image-2 position-absolute w-100">
+                            {% endif %} -->
+                        </a>
+                        {% if produto.cupcake.sale %}
+                        <span class="onsale">Sale!</span>
+                        
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-title">
+                            <h4 class="title-2"><a href="{% url 'product_details-page' produto.cupcake.id %}">{{ produto.cupcake.titulo }}</a></h4>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <div class="price-box">
+                            {% if produto.cupcake.preco_sale %}
+                            <span class="regular-price">${{ produto.cupcake.preco_sale }}</span>
+                            {% else %}
+                            <span class="regular-price">${{ produto.cupcake.preco }}</span>
+                            {% endif %}
+
+                            
+                            {% if produto.cupcake.preco_sale %}
+                                <span class="old-price"><del>${{ produto.cupcake.preco }}</del></span>
+                            {% endif %}
+                        </div>
+                        <a href="{%  url 'cart-page' %}" class="btn product-cart">Add to Cart</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

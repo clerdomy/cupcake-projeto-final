@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<body>
+    <p>Please correct the errors in the form.</p>
+    <p>Você será redirecionado em 5 segundos...</p>
+
+    <script>
+        setTimeout(function(){
+            window.location.href = "{% url 'contact_us-page' %}";
+        }, 5000); // 5000 ms = 5 segundos
+    </script>
+
+        <!--Footer Area Start-->
+        {% include "cupcakes/include/html-footer.html" %}
+        <!--Footer Area End-->
+</body>
+
+
+
+{% endblock %}

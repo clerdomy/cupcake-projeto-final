@@ -1,0 +1,35 @@
+<div class="news-letter-area mt-text-6 pb-text-4">
+    <div class="container custom-area">
+        <div class="row align-items-center">
+            <!--Section Title Start-->
+            <div class="col-md-6 col-custom">
+                <div class="section-title text-left mb-35">
+                    <h3 class="section-title-3">Enviar Newsletter</h3>
+                    <p class="desc-content mb-0">Digite seu endereço de e-mail para receber nossa newsletter e se manter
+                        atualizado</p>
+                </div>
+            </div>
+            <!--Section Title End-->
+            <div class="col-md-6 col-custom">
+                <div class="news-latter-box">
+                    <div class="newsletter-form-wrap text-center">
+                        <form id="mc-form" class="mc-form" data-subscribe-url="{% url 'subscribe_newsletter' %}">
+                            <input id="mc-email" class="form-control email-box" name="EMAIL" type="email" lang="en"
+                                maxlength="254" value="" placeholder="example@domain.com" autocapitalize="off"
+                                spellcheck="false" autocorrect="off" autocomplete="on" required="" inputmode="email"
+                                pattern="(?![_.-])((?![_.-][_.-])[a-zA-Z\d_.-]){0,63}[a-zA-Z\d]@((?!-)((?!--)[a-zA-Z\d-]){0,63}[a-zA-Z\d]\.){1,2}([a-zA-Z]{2,14}\.)?[a-zA-Z]{2,14}">>
+                            <button id="mc-submit" class="btn rounded-0" type="submit">Inscrever-se</button>
+                        </form>
+                        <!-- mailchimp-alerts Start -->
+                        <div class="mailchimp-alerts text-centre">
+                            <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                            <div class="mailchimp-success text-success"></div><!-- mailchimp-success end -->
+                            <div class="mailchimp-error text-danger"></div><!-- mailchimp-error end -->
+                        </div>
+                        <!-- mailchimp-alerts end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

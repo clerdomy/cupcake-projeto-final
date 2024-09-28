@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+
+{% block content %}
+<!-- Área de Cabeçalho Inicia Aqui -->
+{% include "cupcakes/include/html-header.html" %}
+<!-- Área de Cabeçalho Termina Aqui -->
+
+<!-- Área de Navegação Inicia Aqui -->
+<div class="breadcrumbs-area position-relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumb-content position-relative section-content">
+                    <h3 class="title-3">Finalizar Compra</h3>
+                    <ul>
+                        <li><a href="{% url 'home-page' %}">Início</a></li>
+                        <li>Finalizar Compra</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Área de Navegação Termina Aqui -->
+
+<!-- Área de Finalização Inicia Aqui -->
+<div class="checkout-area mt-no-text">
+    <div class="container custom-container">
+        <div class="row">
+            <div class="col-lg-6 col-12 col-custom">
+                {% if saved_address %}
+                <div class="saved-address">
+                    <h3>Detalhes de Cobrança</h3>
+                </div>
+                <div id="address-edit" role="tabpanel">
+                    <div class="myaccount-content">
+                        <h3>Endereço de Cobrança</h3>
+                        <address>
+                            <p><strong>{{ saved_address.first_name }} {{ saved_address.last_name }}</strong></p>
+                            <p>{{ saved_address.street_address }}<br>
+                                {{ saved_address.city }}/{{ saved_address.state }}, {{ saved_address.postcode }}</p>
+                            <p>Celular: {{ saved_address.phone }}</p>
+                        </address>
+                        <!-- Botão para editar endereço -->
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'edit_address' user.username|generate_user_token saved_address.id %}"
+                            class="btn flosun-button secondary-btn theme-color rounded-0">
+                            <i class="fa fa-edit mr-2"></i>Editar Endereço
+                        </a>
+                        {% endif %}
+
+                        <!-- Botão para deletar endereço -->
+                        <form action="{% url 'delete_address' saved_address.id %}" method="POST"
+                            style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn flosun-button secondary-btn danger-color rounded-0">
+                                <i class="fa fa-trash mr-2"></i>Deletar Endereço
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <form action="{% url 'process_checkout' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="checkbox-form">
+                        <h3>Detalhes de Cobrança</h3>
+                        <div class="row">
+                            <div class="col-md-12 col-custom">
+                                <div class="country-select clearfix">
+                                    <label>País <span class="required">*</span></label>
+                                    {{ form.country }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Primeiro Nome <span class="required">*</span></label>
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Sobrenome <span class="required">*</span></label>
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Nome da Empresa</label>
+                                    {{ form.company_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Endereço <span class="required">*</span></label>
+                                    {{ form.street_address }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    {{ form.apartment_suite }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Cidade <span class="required">*</span></label>
+                                    {{ form.city }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Estado / Região <span class="required">*</span></label>
+                                    {{ form.state }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>CEP / Código Postal <span class="required">*</span></label>
+                                    {{ form.postcode }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Email <span class="required">*</span></label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Telefone <span class="required">*</span></label>
+                                    {{ form.phone }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-button-payment">
+                            <button class="btn flosun-button secondary-btn black-color rounded-0 w-100">Salvar
+                                Endereço</button>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+            {% include "cupcakes/include/checkout.html" %}
+        </div>
+    </div>
+</div>
+<!-- Área de Finalização Termina Aqui -->
+
+<!-- Área do Rodapé Inicia Aqui -->
+{% include "cupcakes/include/html-footer.html" %}
+<!-- Área do Rodapé Termina Aqui -->
+
+{% endblock %}

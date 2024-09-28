@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<body>
+
+<!-- Header Area Start Here -->
+{% include "cupcakes/include/html-header.html" %}
+<!-- Header Area End Here -->
+
+<!-- Breadcrumb Area Start Here -->
+<div class="breadcrumbs-area position-relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumb-content position-relative section-content">
+                    <h3 class="title-3">Checkout</h3>
+                    <ul>
+                        <li><a href="{% url 'home-page' %}">Home</a></li>
+                        <li>Checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Area End Here -->
+
+<!-- Checkout Area Start Here -->
+<div class="checkout-area mt-no-text">
+    <div class="container custom-container">
+        <div class="row">
+            <div class="col-lg-6 col-12 col-custom">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="checkbox-form">
+                        <h3>Editar Endereço de Cobrança</h3>
+                        <div class="row">
+                            <div class="col-md-12 col-custom">
+                                <div class="country-select clearfix">
+                                    <label>País <span class="required">*</span></label>
+                                    {{ form.country }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Primeiro Nome <span class="required">*</span></label>
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Sobrenome <span class="required">*</span></label>
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Nome da Empresa</label>
+                                    {{ form.company_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Endereço <span class="required">*</span></label>
+                                    {{ form.street_address }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    {{ form.apartment_suite }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Cidade <span class="required">*</span></label>
+                                    {{ form.city }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Estado / Região <span class="required">*</span></label>
+                                    {{ form.state }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>CEP / Código Postal <span class="required">*</span></label>
+                                    {{ form.postcode }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Email <span class="required">*</span></label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-custom">
+                                <div class="checkout-form-list">
+                                    <label>Telefone <span class="required">*</span></label>
+                                    {{ form.phone }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-button-payment">
+                            <button class="btn flosun-button secondary-btn black-color rounded-0 w-100">Salvar Endereço</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% include "cupcakes/include/checkout.html" %}
+        </div>
+    </div>
+</div>
+<!-- Checkout Area End Here -->
+
+<!-- Footer Area Start Here -->
+{% include "cupcakes/include/html-footer.html" %}
+<!-- Footer Area End Here -->
+</body>
+{% endblock %}

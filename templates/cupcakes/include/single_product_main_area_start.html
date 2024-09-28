@@ -1,0 +1,342 @@
+{% load static %}
+
+<div class="single-product-main-area">
+    <div class="container container-default custom-area">
+        <div class="row">
+            <div class="col-lg-5 offset-lg-0 col-md-8 offset-md-2 col-custom">
+                <div class="product-details-img">
+                    <div class="single-product-img swiper-container gallery-top popup-gallery">
+                        <div class="swiper-wrapper">
+                            {% for imagem in product.0.large_size %} <!-- Ajustado para usar o nome correto da chave -->
+                            <div class="swiper-slide">
+                                <a class="w-100" href="{{ imagem }}" data-fancybox="gallery">
+                                    <img class="w-100" src="{{ imagem }}" alt="Product">
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- imagens pequenas para o produto -->
+                    <div class="single-product-thumb swiper-container gallery-thumbs">
+                        <div class="swiper-wrapper">
+                            {% for imagem in product.0.small_size %}
+                            <div class="swiper-slide">
+                                <img src="{{ imagem }}" alt="Product">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next swiper-button-white"><i class="lnr lnr-arrow-right"></i></div>
+                        <div class="swiper-button-prev swiper-button-white"><i class="lnr lnr-arrow-left"></i></div>
+                    </div>
+                </div>
+            </div>
+            <!-- preço do produto e tudo mais -->
+            <div class="col-lg-7 col-custom">
+                <form action="{% url 'adicionar_ao_carrinho' product.0.cupcake.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="product-summery position-relative">
+                        <div class="product-head mb-3">
+                            <h2 class="product-title">{{product.0.cupcake.titulo}}</h2>
+                        </div>
+                        <div class="price-box mb-2">
+                            {% if product.0.cupcake.preco_sale %}
+                            <span class="regular-price">${{ product.0.cupcake.preco_sale}}</span>
+                            {% else %}
+                            <span class="regular-price">${{ product.0.cupcake.preco }}</span>
+                            {% endif %}
+
+
+                            {% if product.0.cupcake.preco %}
+                            <span class="old-price"><del>${{ product.0.cupcake.preco }}</del></span>
+                            {% endif %}
+                        </div>
+                        <div class="product-rating mb-3">
+                            {{ product.0.cupcake.media_rating | safe }}
+                        </div>
+                        <div class="sku mb-3">
+                            <span>SKU: {{product.0.cupcake.sku}}</span>
+                        </div>
+                        <p class="desc-content mb-5">{{product.0.cupcake.descricao}}</p>
+                        <div class="quantity-with_btn mb-5">
+                            <div class="quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="0" type="text" name="quantities">
+                                    <div class="dec qtybutton">-</div>
+                                    <div class="inc qtybutton">+</div>
+                                </div>
+                            </div>
+                            <button class="btn product-cart button-icon flosun-button dark-btn">Add to cart </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="social-share mb-4">
+                    <span>Share :</span>
+                    <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
+                    <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
+                    <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
+                    <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
+                </div>
+                <div class="payment">
+                    <a href="#"><img class="border" src="{% static 'assets/images/payment/payment-icon.png' %}"
+                            alt="Payment"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- produtos descrição infor -->
+    <div class="row mt-no-text">
+        <div class="col-lg-12 col-custom">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active text-uppercase" id="profile-tab" data-bs-toggle="tab" href="#connect-1"
+                        role="tab" aria-selected="true">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase" id="home-tab" data-bs-toggle="tab" href="#connect-2" role="tab"
+                        aria-selected="false">Description</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase" id="contact-tab" data-bs-toggle="tab" href="#connect-3"
+                        role="tab" aria-selected="false">Shipping Policy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase" id="review-tab" data-bs-toggle="tab" href="#connect-4" role="tab"
+                        aria-selected="false">Size Chart</a>
+                </li>
+            </ul>
+            <div class="tab-content mb-text" id="myTabContent">
+                <div class="tab-pane fade show active" id="connect-1" role="tabpanel" aria-labelledby="profile-tab">
+                    <!-- Start Single Content -->
+                    <!-- Start Single Content -->
+                    <div class="product_tab_content  border p-3">
+                        <div class="review_address_inner">
+                            <!-- Start Single Review -->
+                            {% for review in reviews %}
+                            <div class="pro_review mb-5">
+                                <div class="review_thumb">
+                                    <img alt="review images" src="{% static 'assets/images/review/1.jpg' %}">
+                                </div>
+                                <div class="review_details">
+                                    <div class="review_info mb-2">
+                                        <div class="product-rating mb-2">
+                                            {{ review.avaliacao_html|safe }}
+                                        </div>
+                                        <h5>{{ review.usuario.first_name|capfirst }}
+                                            {{review.usuario.last_name|capfirst }} -
+                                            <span>{{ review.data|date:"F j, Y" }}</span>
+                                        </h5>
+                                    </div>
+                                    <p>{{ review.comentario }}</p>
+
+                                </div>
+                            </div>
+                            <!-- End Single Review -->
+                            {% endfor %}
+                        </div>
+                        <!-- Start Rating Area -->
+                        {% if not user_has_rating %}
+                        <form id="rating-form" class="comment-form-area" method="post"
+                            action="{% url 'register_rating' %}">
+                            <input type="hidden" value="{{product.0.cupcake.id}}" name="cupcake_id">
+                            <div class="rating_wrap">
+                                <h5 class="rating-title-1 font-weight-bold mb-2">Adicionar uma avaliação</h5>
+                                <p class="mb-2">Seu endereço de email não será publicado. Os campos obrigatórios
+                                    estão marcados com *.</p>
+                                <h6 class="rating-title-2 mb-2">Sua Avaliação</h6>
+                                <div class="rating_list mb-4">
+                                    <div class="review_info">
+                                        <div class="product-rating mb-3" id="star-container">
+                                            <!-- Estrelas serão geradas dinamicamente -->
+                                        </div>
+                                        <input type="hidden" id="num-stars" min="1" max="5" value="5" name="avaliacao">
+                                        <input type="hidden" id="rating" name="rating" value="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comments-area comments-reply-area">
+                                <div class="row">
+                                    <div class="col-lg-12 col-custom">
+                                        {% csrf_token %}
+                                        <div class="row comment-input">
+                                            <div class="col-md-6 col-custom comment-form-author mb-3">
+                                                <label>Nome <span class="required">*</span></label>
+                                                <input type="text" required="required" name="name"
+                                                    value="{{ request.user.first_name|capfirst }} {{ request.user.last_name|capfirst }}"
+                                                    disabled>
+                                            </div>
+                                            <div class="col-md-6 col-custom comment-form-email mb-3">
+                                                <label>Email <span class="required">*</span></label>
+                                                <input type="email" required="required" name="email"
+                                                    value="{{ request.user.email }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="comment-form-comment mb-3">
+                                            <label>Comentário</label>
+                                            <textarea class="comment-notes" required="required"
+                                                name="comentario"></textarea>
+                                        </div>
+                                        <div class="comment-form-submit">
+                                            <button class="btn flosun-button secondary-btn rounded-0"
+                                                type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        {% endif %}
+                        <!-- End Rating Area -->
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="desc-content">
+                        <p class="mb-3">On the other hand, we denounce with righteous indignation and dislike men who
+                            are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by
+                            desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal
+                            blame belongs to those who fail in their duty through weakness of will, which is the same as
+                            saying through shrinking from toil and pain. These cases are perfectly simple and easy to
+                            distinguish. In a free hour, when our power of choice is untrammelled and when nothing
+                            prevents our being able to do what we like best, every pleasure is to be welcomed and every
+                            pain avoided. But in certain circumstances and owing to the claims of duty or the
+                            obligations of business it will frequently occur that pleasures have to be repudiated and
+                            annoyances accepted. The wise man therefore always holds in these matters to this principle
+                            of selection: he rejects pleasures to secure other greater pleasures, or else he endures
+                            pains to avoid worse pains.</p>
+                        <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta
+                            nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere
+                            possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam
+                            et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae
+                            sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+                            reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores
+                            repellat.</p>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="connect-3" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="shipping-policy">
+                        <h4 class="title-3 mb-4">Shipping policy for our store</h4>
+                        <p class="desc-content mb-2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
+                            ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex
+                            ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate</p>
+                        <ul class="policy-list mb-2">
+                            <li>1-2 business days (Typically by end of day)</li>
+                            <li><a href="#">30 days money back guaranty</a></li>
+                            <li>24/7 live support</li>
+                            <li>odio dignissim qui blandit praesent</li>
+                            <li>luptatum zzril delenit augue duis dolore</li>
+                            <li>te feugait nulla facilisi.</li>
+                        </ul>
+                        <p class="desc-content mb-2">Nam liber tempor cum soluta nobis eleifend option congue nihil
+                            imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem
+                            insitam; est usus legentis in iis qui facit eorum</p>
+                        <p class="desc-content mb-2">claritatem. Investigationes demonstraverunt lectores legere me lius
+                            quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem
+                            consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram
+                            anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem
+                            modo typi qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="connect-4" role="tabpanel" aria-labelledby="review-tab">
+                    <div class="size-chart">
+                        <h4 class="title-3 mb-4">Size Chart</h4>
+                        <p class="desc-content mb-2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
+                            ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex
+                            ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate</p>
+                        <img alt="size chart" src="{% static 'assets/images/size-chart.jpg' %}">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script>
+    function generateStars() {
+        const container = document.getElementById('star-container');
+        const numStars = document.getElementById('num-stars').value;
+        container.innerHTML = ''; // Limpa as estrelas atuais
+
+        for (let i = 1; i <= numStars; i++) {
+            const star = document.createElement('i');
+            star.className = 'fa fa-star-o'; // Inicialmente vazia
+            star.setAttribute('data-value', i);
+
+            // Adiciona eventos para hover e clique
+            star.onmouseover = function () {
+                highlightStars(i);
+            };
+            star.onclick = function () {
+                setRating(i);
+            };
+            container.appendChild(star);
+        }
+
+        // Remove o highlight ao sair do container de estrelas
+        container.onmouseleave = function () {
+            resetStars();
+        };
+    }
+
+    function highlightStars(rating) {
+        const stars = document.querySelectorAll('#star-container i');
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.className = 'fa fa-star'; // Preenche a estrela
+            } else {
+                star.className = 'fa fa-star-o'; // Estrela vazia
+            }
+        });
+    }
+
+    function setRating(rating) {
+        document.getElementById('rating').value = rating; // Define o valor da classificação
+        document.getElementById('num-stars').value = rating; // Atualiza o valor do input num-stars
+        highlightStars(rating); // Mantém as estrelas preenchidas após clicar
+    }
+
+    function resetStars() {
+        const rating = document.getElementById('rating').value; // Obtém a classificação atual
+        highlightStars(rating); // Restaura as estrelas conforme a classificação atual
+    }
+
+    // Gera as estrelas no carregamento inicial
+    window.onload = generateStars;
+
+    document.getElementById('rating-form').onsubmit = function (event) {
+        event.preventDefault(); // Impede o envio tradicional do formulário
+
+        const form = event.target;
+        const formData = new FormData(form); // Coleta os dados do formulário
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrfToken,
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    window.location.reload(false);
+                    // alert("Avaliação registrada com sucesso!");
+
+                } else {
+                    alert("Erro: " + data.msg);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao registrar a avaliação:', error);
+                alert("Ocorreu um erro ao tentar enviar a avaliação.");
+            });
+    };
+
+</script>

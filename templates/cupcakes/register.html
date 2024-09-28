@@ -1,0 +1,113 @@
+{% extends  "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<body>
+
+    <!-- Header Area Start Here -->
+    {% include "cupcakes/include/html-header.html" %}
+
+    <!-- Header Area End Here -->
+    <!-- Breadcrumb Area Start Here -->
+    <div class="breadcrumbs-area position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="breadcrumb-content position-relative section-content">
+                        <h3 class="title-3">Login-Register</h3>
+                        <ul>
+                            <li><a href="{%  url 'home-page' %}">Home</a></li>
+                            <li>Login-Register</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End Here -->
+    <!-- Register Area Start Here -->
+    <div class="login-register-area mt-no-text">
+        <div class="container container-default-2 custom-area">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-custom">
+                    <div class="login-register-wrapper">
+                        <div class="section-content text-center mb-5">
+                            <h2 class="title-4 mb-2">Create Account</h2>
+                            <p class="desc-content">Please Register using account detail bellow.</p>
+                        </div>
+                        <form action="{% url 'register-page' %}" method="post">
+                            {% csrf_token %}
+                            <div class="single-input-item mb-3">
+                                <input type="text" name="first_name" placeholder="First Name" required>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" name="last_name" placeholder="Last Name" required>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" name="username" placeholder="Username" required>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="email" name="email" placeholder="Email" required>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="password" name="password" placeholder="Enter your Password" required>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
+                                    <div class="remember-meta mb-3">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="subscribe" class="custom-control-input" id="subscribeNewsletter">
+                                            <label class="custom-control-label" for="subscribeNewsletter">Subscribe to Our Newsletter</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <button type="submit" class="btn flosun-button secondary-btn theme-color rounded-0">Register</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Register Area End Here -->
+    <!--Footer Area Start-->
+    {% include "cupcakes/include/html-footer.html" %}
+    <!--Footer Area End-->
+
+    <!-- JS
+============================================ -->
+
+
+    <!-- jQuery JS -->
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <!-- jQuery Migrate JS -->
+    <script src="{% static 'assets/js/vendor/jquery-migrate-3.3.2.min.js' %}"></script>
+    <!-- Modernizer JS -->
+    <script src="{% static 'assets/js/vendor/modernizr-3.7.1.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+
+
+    <!-- Swiper Slider JS -->
+    <script src="{% static 'assets/js/plugins/swiper-bundle.min.js' %}"></script>
+    <!-- nice select JS -->
+    <script src="{% static 'assets/js/plugins/nice-select.min.js' %}"></script>
+    <!-- Ajaxchimpt js -->
+    <script src="{% static 'assets/js/plugins/jquery.ajaxchimp.min.js' %}"></script>
+    <!-- Jquery Ui js -->
+    <script src="{% static 'assets/js/plugins/jquery-ui.min.js' %}"></script>
+    <!-- Jquery Countdown js -->
+    <script src="{% static 'assets/js/plugins/jquery.countdown.min.js' %}"></script>
+    <!-- jquery magnific popup js -->
+    <script src="{% static 'assets/js/plugins/jquery.magnific-popup.min.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+
+</body>
+{% endblock %}

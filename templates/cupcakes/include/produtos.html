@@ -1,0 +1,42 @@
+<div class="row shop_wrapper grid_3">
+    {% for cupcake in cupcakes %}
+    <div class="col-md-6 col-sm-6 col-lg-4 col-custom product-area">
+        <div class="product-item">
+            <div class="single-product position-relative mr-0 ml-0">
+                <div class="product-image">
+                    <a class="d-block" href="{% url 'product_details-page' cupcake.id %}">
+                        <!-- Exibe a primeira imagem do cupcake -->
+                        <img src="{{ cupcake.imagens.first.normal.url }}" alt="Cupcake Image" class="product-image-1 w-100">
+                    </a>
+                    {% if cupcake.sale %}
+                    <span class="onsale">Sale!</span>
+                    {% endif %}
+                </div>
+                <div class="product-content">
+                    <div class="product-title">
+                        <h4 class="title-2"> <a href="{% url 'product_details-page' cupcake.id %}">{{ cupcake.titulo }}</a></h4>
+                    </div>
+                    <div class="product-rating">
+                        {{ cupcake.media_rating|safe }}
+                    </div>
+                    
+                    <div class="price-box">
+                        {% if cupcake.preco_sale %}
+                        <span class="regular-price">${{ cupcake.preco_sale }}</span>
+                        {% else %}
+                        <span class="regular-price">${{ cupcake.preco }}</span>
+                        {% endif %}
+
+
+                        {% if cupcake.preco_sale %}
+                        <span class="old-price"><del>${{ cupcake.preco }}</del></span>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'product_details-page' cupcake.id %}" class="btn product-cart">Add to Cart</a>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

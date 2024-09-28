@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<body>
+
+    <!-- Header Area Start Here -->
+
+    {% include "cupcakes/include/html-header.html" %}
+
+    <!-- Header Area End Here -->
+    <!-- Breadcrumb Area Start Here -->
+    <div class="breadcrumbs-area position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="breadcrumb-content position-relative section-content">
+                        <h3 class="title-3">Sobre Nós</h3>
+                        <ul>
+                            <li><a href="{% url 'home-page' %}">Início</a></li>
+                            <li>Sobre Nós</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End Here -->
+    <!-- About Area Start Here -->
+    <div class="about-area mt-no-text">
+        <div class="container custom-area">
+            <div class="row mb-30 align-items-center">
+                <div class="col-md-6 col-custom">
+                    <div class="collection-content">
+                        <div class="section-title text-left">
+                            <span class="section-title-1">Momentos Especiais</span>
+                            <h3 class="section-title-3 pb-0">Cupcakes para Aniversários & Presentes</h3>
+                        </div>
+                        <div class="desc-content">
+                            <p>Nossos cupcakes são mais do que apenas sobremesas; são momentos especiais embrulhados em
+                                doçura. Cada cupcake é feito com ingredientes de alta qualidade e decorado com cuidado,
+                                garantindo que cada mordida seja uma experiência memorável. Perfeitos para aniversários,
+                                nossos cupcakes também são um presente ideal para qualquer ocasião, expressando carinho
+                                e alegria de uma forma deliciosa e única. Deixe-nos fazer parte dos seus momentos
+                                inesquecíveis.
+                            </p>
+                        </div>
+                        <a href="{% url 'shop-page' %}" class="btn flosun-button secondary-btn rounded-0">Ver
+                            Coleção</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-custom">
+                    <!--Single Banner Area Start-->
+                    <div class="single-banner hover-style">
+                        <div class="banner-img">
+                            <a href="#">
+                                <img src="{% url 'get_image' page='null' _type='collection' name='1-1.jpg' %}"
+                                    alt="Imagem Sobre Nós">
+
+                                <div class="overlay-1"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--Single Banner Area End-->
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-6 col-custom order-2 order-md-1">
+                    <!--Single Banner Area Start-->
+                    <div class="single-banner hover-style">
+                        <div class="banner-img">
+                            <a href="#">
+                                <img src="{% url 'get_image' page='null' _type='collection' name='1-2.jpg' %}"
+                                    alt="Imagem Sobre Nós">
+                                <div class="overlay-1"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--Single Banner Area End-->
+                </div>
+                <div class="col-md-6 col-custom order-1 order-md-2">
+                    <div class="collection-content">
+                        <div class="section-title text-left">
+                            <span class="section-title-1">Para o seu Grande Dia</span>
+                            <h3 class="section-title-3 pb-0">Cupcakes para Casamentos</h3>
+                        </div>
+                        <div class="desc-content">
+                            <p>Celebre o amor com nossos cupcakes elegantes e deliciosos, perfeitos para casamentos.
+                                Cada cupcake é uma obra de arte, cuidadosamente elaborada para refletir a beleza e a
+                                sofisticação do seu grande dia. Oferecemos uma variedade de sabores e designs
+                                personalizados que complementam a decoração do seu casamento, garantindo que cada
+                                detalhe seja inesquecível. Transforme seu momento especial em uma doce lembrança com
+                                nossos cupcakes, feitos para encantar seus convidados e adicionar um toque de doçura ao
+                                seu casamento.</p>
+                        </div>
+                        <a href="{% url 'shop-page'%}" class="btn flosun-button secondary-btn rounded-0">Ver Coleção</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Us Area End Here -->
+    <!-- History Area Start Here -->
+    {% include "cupcakes/include/html-our_history.html" %}
+    <!-- Feature History Area End Here -->
+    <!-- Newsletter Area Start Here -->
+    {% include "cupcakes/include/html-newsletter.html" %}
+
+    <!-- Newsletter Area End Here -->
+    <!-- Footer Area Start Here -->
+    {% include "cupcakes/include/html-footer.html" %}
+
+    <!-- Footer Area End Here -->
+
+</body>
+
+{% endblock content %}
